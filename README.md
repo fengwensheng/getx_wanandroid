@@ -8,4 +8,4 @@
 
 
 
-![](/Users/fws/Development/flutterApp/getx/getx_wanandroid/preview/01.jpg)
+![](preview/01.jpg)
