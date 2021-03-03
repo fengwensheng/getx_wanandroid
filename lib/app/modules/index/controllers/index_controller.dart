@@ -16,6 +16,7 @@ class IndexController extends GetxController {
   final _topProvider = Get.find<TopProvider>();
   final _articleProvider = Get.find<ArticleProvider>();
   final page = 0.obs;
+
   @override
   void onInit() {
     super.onInit();

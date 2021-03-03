@@ -7,6 +7,7 @@ import 'package:getx_wanandroid/app/modules/index/banners_model.dart' as banner;
 import 'package:getx_wanandroid/app/modules/index/controllers/index_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_wanandroid/app/modules/index/top_model.dart' as top;
+import 'package:getx_wanandroid/app/routes/app_pages.dart';
 import 'package:getx_wanandroid/app/widgets/space_header.dart';
 
 import '../article_model.dart';
@@ -66,85 +67,92 @@ class IndexView extends GetView<IndexController> {
       );
 
   Widget _buildArticle(int i, List<top.Data> tops, List<Datas> articles) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              i < tops.length
-                  ? Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(3)),
-                        border: Border.all(
-                          color: Colors.red[900],
-                        ),
-                      ),
-                      child: Text(
-                        '置顶',
-                        style: TextStyle(
-                          color: Colors.red[900],
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  : Container(),
-              SizedBox(width: 20.w),
-              Text(
+      InkWell(
+        onTap: () {
+          final link =
+              i < tops.length ? tops[i].link : articles[i - tops.length].link;
+          Get.toNamed(Routes.ARTICLE_DETAIL, arguments: link);
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
                 i < tops.length
-                    ? '${tops[i].author}'
-                    : '${articles[i - tops.length].author}',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18.sp,
+                    ? Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 2.w),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(3)),
+                          border: Border.all(
+                            color: Colors.red[900],
+                          ),
+                        ),
+                        child: Text(
+                          '置顶',
+                          style: TextStyle(
+                            color: Colors.red[900],
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    : Container(),
+                SizedBox(width: 20.w),
+                Text(
+                  i < tops.length
+                      ? '${tops[i].author}'
+                      : '${articles[i - tops.length].author}',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18.sp,
+                  ),
                 ),
-              ),
-              Spacer(),
-              Text(
-                i < tops.length
-                    ? '${tops[i].niceDate}'
-                    : '${articles[i - tops.length].niceDate}',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18.sp,
+                Spacer(),
+                Text(
+                  i < tops.length
+                      ? '${tops[i].niceDate}'
+                      : '${articles[i - tops.length].niceDate}',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18.sp,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Text(
-            i < tops.length
-                ? '${tops[i].title}'
-                : '${articles[i - tops.length].title}',
-            style: TextStyle(
-              fontSize: 32.sp,
-              fontWeight: FontWeight.bold,
+              ],
             ),
-          ),
-          Row(
-            children: [
-              Text(
-                i < tops.length
-                    ? '${tops[i].superChapterName}/'
-                    : '${articles[i - tops.length].superChapterName}',
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  color: Colors.grey,
-                ),
+            Text(
+              i < tops.length
+                  ? '${tops[i].title}'
+                  : '${articles[i - tops.length].title}',
+              style: TextStyle(
+                fontSize: 32.sp,
+                fontWeight: FontWeight.bold,
               ),
-              Text(
-                i < tops.length
-                    ? '${tops[i].chapterName}'
-                    : '${articles[i - tops.length].chapterName}',
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  color: Colors.grey,
+            ),
+            Row(
+              children: [
+                Text(
+                  i < tops.length
+                      ? '${tops[i].superChapterName}/'
+                      : '${articles[i - tops.length].superChapterName}',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                Text(
+                  i < tops.length
+                      ? '${tops[i].chapterName}'
+                      : '${articles[i - tops.length].chapterName}',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       );
 
   ///end
