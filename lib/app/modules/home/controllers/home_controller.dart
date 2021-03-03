@@ -29,9 +29,15 @@ class HomeController extends GetxController {
     Container(color: Colors.purple),
   ];
   @override
-  void onInit() {}
+  void onInit() {
+    super.onInit();
+  }
+
   @override
-  void onReady() {}
+  void onReady() {
+    super.onReady();
+  }
+
   @override
   void onClose() {}
 }

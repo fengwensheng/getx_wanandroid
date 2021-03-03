@@ -15,6 +15,7 @@ class IndexController extends GetxController {
   final _bannersProvider = Get.find<BannersProvider>();
   final _topProvider = Get.find<TopProvider>();
   final _articleProvider = Get.find<ArticleProvider>();
+  final page = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -39,11 +40,21 @@ class IndexController extends GetxController {
     });
   }
 
-  void getArticles() {
-    _articleProvider.getArticles(0).then((resp) {
-      articles.assignAll(resp.body.data.datas);
-    }, onError: (e) {
+  Future<void> getArticles() async {
+    //for reset
+    if ((page.value == 0) && (articles.isNotEmpty)) articles.clear();
+    try {
+      Response<article.Article> resp =
+          await _articleProvider.getArticles(page.value);
+      articles.addAll(resp.body.data.datas);
+      page.value++;
+    } catch (e) {
       Get.snackbar('ERROR', e.toString(), colorText: Colors.red);
-    });
+    }
+  }
+
+  Future<void> reset() async {
+    page.value = 0;
+    await getArticles();
   }
 }

@@ -9,9 +9,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(_) => CupertinoTabScaffold(
         tabBuilder: (_, i) => controller.subpages[i],
-        tabBar: CupertinoTabBar(
-          items: controller.navBarItems,
-        ),
+        tabBar: CupertinoTabBar(items: controller.navBarItems),
       );
 
   ///end

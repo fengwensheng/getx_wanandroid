@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:getx_wanandroid/app/modules/index/banners_model.dart' as banner;
 import 'package:getx_wanandroid/app/modules/index/controllers/index_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_wanandroid/app/modules/index/top_model.dart' as top;
+import 'package:getx_wanandroid/app/widgets/space_header.dart';
 
 import '../article_model.dart';
 
@@ -46,14 +48,19 @@ class IndexView extends GetView<IndexController> {
       );
 
   Widget _buildArticles(List<top.Data> tops, List<Datas> articles) => Expanded(
-        child: ListView.separated(
-          itemBuilder: (_, i) => _buildArticle(i, tops, articles),
-          separatorBuilder: (_, i) => Divider(),
-          itemCount: tops.length + articles.length,
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: 20.w,
-            vertical: 20.h,
+        child: EasyRefresh(
+          onRefresh: controller.reset,
+          onLoad: controller.getArticles,
+          header: SpaceHeader(),
+          child: ListView.separated(
+            itemBuilder: (_, i) => _buildArticle(i, tops, articles),
+            separatorBuilder: (_, i) => Divider(),
+            itemCount: tops.length + articles.length,
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.w,
+              vertical: 20.h,
+            ),
           ),
         ),
       );
